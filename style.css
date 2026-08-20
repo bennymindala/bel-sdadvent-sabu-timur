@@ -1,0 +1,2856 @@
+/* =========================================================
+   BEL SEKOLAH
+   SD ADVENT SABU TIMUR
+   LIQUID GLASS - DARK SCHOOL THEME
+========================================================= */
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-dark: #061329;
+    --bg-blue: #0a2347;
+    --bg-light: #123b68;
+
+    --white: #ffffff;
+    --text: #edf5ff;
+    --muted: #9fb4cf;
+
+    --blue: #398cff;
+    --blue-dark: #1762c7;
+
+    --yellow: #ffd84d;
+    --green: #42d68a;
+    --red: #ff6172;
+
+    --glass: rgba(255, 255, 255, 0.09);
+    --glass-border: rgba(255, 255, 255, 0.16);
+
+    --shadow:
+        0 20px 45px rgba(0, 0, 0, 0.25);
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body {
+    min-height: 100vh;
+
+    font-family:
+        "Segoe UI",
+        -apple-system,
+        BlinkMacSystemFont,
+        Arial,
+        sans-serif;
+
+    color: var(--text);
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(46, 130, 255, 0.20),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 90%,
+            rgba(255, 190, 60, 0.12),
+            transparent 30%
+        ),
+        linear-gradient(
+            145deg,
+            var(--bg-dark),
+            var(--bg-blue),
+            var(--bg-light)
+        );
+
+    background-attachment: fixed;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   BACKGROUND ANIMATION
+========================================================= */
+
+.background-animation {
+    position: fixed;
+
+    inset: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    z-index: -1;
+}
+
+
+.background-animation span {
+    position: absolute;
+
+    display: block;
+
+    opacity: 0.35;
+
+    font-size: 20px;
+
+    filter:
+        drop-shadow(
+            0 5px 12px
+            rgba(0, 0, 0, .25)
+        );
+
+    animation:
+        floatingStars 8s ease-in-out infinite;
+}
+
+
+.background-animation span:nth-child(1) {
+    top: 8%;
+    left: 8%;
+    animation-delay: 0s;
+}
+
+.background-animation span:nth-child(2) {
+    top: 18%;
+    right: 12%;
+    animation-delay: 1s;
+}
+
+.background-animation span:nth-child(3) {
+    top: 45%;
+    left: 3%;
+    animation-delay: 2s;
+}
+
+.background-animation span:nth-child(4) {
+    top: 60%;
+    right: 7%;
+    animation-delay: 3s;
+}
+
+.background-animation span:nth-child(5) {
+    top: 75%;
+    left: 12%;
+    animation-delay: 1.5s;
+}
+
+.background-animation span:nth-child(6) {
+    top: 32%;
+    right: 5%;
+    animation-delay: 2.5s;
+}
+
+.background-animation span:nth-child(7) {
+    top: 85%;
+    right: 20%;
+    animation-delay: 4s;
+}
+
+.background-animation span:nth-child(8) {
+    top: 12%;
+    left: 45%;
+    animation-delay: 3.5s;
+}
+
+
+@keyframes floatingStars {
+
+    0%,
+    100% {
+        transform:
+            translateY(0)
+            rotate(0deg);
+
+        opacity: .25;
+    }
+
+    50% {
+        transform:
+            translateY(-15px)
+            rotate(8deg);
+
+        opacity: .55;
+    }
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.container {
+    width:
+        min(
+            900px,
+            calc(100% - 30px)
+        );
+
+    margin:
+        0 auto;
+
+    padding:
+        35px 0 25px;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header {
+    text-align: center;
+
+    margin-bottom: 24px;
+
+    animation:
+        headerAppear .7s ease;
+}
+
+
+@keyframes headerAppear {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.logo-wrapper {
+    position: relative;
+
+    width: 125px;
+    height: 125px;
+
+    margin:
+        0 auto 15px;
+}
+
+
+.logo {
+    position: relative;
+
+    width: 115px;
+    height: 115px;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    background: white;
+
+    border:
+        4px solid
+        rgba(255, 255, 255, .85);
+
+    box-shadow:
+
+        0 15px 35px
+        rgba(0, 0, 0, .35),
+
+        0 0 0 8px
+        rgba(255, 255, 255, .05);
+
+    z-index: 2;
+
+    animation:
+        logoFloat 4s ease-in-out infinite;
+}
+
+
+.logo-ring {
+    position: absolute;
+
+    width: 125px;
+    height: 125px;
+
+    border-radius: 50%;
+
+    border:
+        2px solid
+        rgba(255, 216, 77, .35);
+
+    animation:
+        ringPulse 3s ease-in-out infinite;
+}
+
+
+@keyframes logoFloat {
+
+    0%,
+    100% {
+        transform:
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translateY(-6px);
+    }
+}
+
+
+@keyframes ringPulse {
+
+    0%,
+    100% {
+        transform:
+            scale(.95);
+
+        opacity: .5;
+    }
+
+    50% {
+        transform:
+            scale(1.08);
+
+        opacity: 1;
+    }
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.small-title {
+    color:
+        #8ea8c7;
+
+    font-size:
+        .65rem;
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        3px;
+
+    margin-bottom:
+        6px;
+}
+
+
+.school-title h1 {
+    font-size:
+        clamp(
+            2rem,
+            6vw,
+            3.1rem
+        );
+
+    line-height:
+        1.1;
+
+    font-weight:
+        900;
+
+    color:
+        white;
+
+    text-shadow:
+        0 5px 20px
+        rgba(0, 0, 0, .35);
+}
+
+
+.school-title h2 {
+    margin-top:
+        7px;
+
+    font-size:
+        clamp(
+            .75rem,
+            2.5vw,
+            1rem
+        );
+
+    letter-spacing:
+        2px;
+
+    color:
+        #b4c9e3;
+}
+
+
+/* =========================================================
+   LIQUID GLASS
+========================================================= */
+
+.welcome-card,
+.clock-card,
+.status-card,
+.control-card,
+.schedule-card,
+.motivation-card {
+
+    position: relative;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, .13),
+            rgba(255, 255, 255, .055)
+        );
+
+    border:
+        1px solid
+        var(--glass-border);
+
+    border-radius:
+        27px;
+
+    backdrop-filter:
+        blur(25px)
+        saturate(150%);
+
+    -webkit-backdrop-filter:
+        blur(25px)
+        saturate(150%);
+
+    box-shadow:
+        var(--shadow),
+
+        inset
+        0 1px 0
+        rgba(255, 255, 255, .16);
+
+    overflow:
+        hidden;
+
+    margin-bottom:
+        17px;
+
+    transition:
+        .25s ease;
+}
+
+
+.welcome-card::before,
+.clock-card::before,
+.status-card::before,
+.control-card::before,
+.schedule-card::before,
+.motivation-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 8%;
+
+    width: 84%;
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, .65),
+            transparent
+        );
+}
+
+
+/* =========================================================
+   WELCOME
+========================================================= */
+
+.welcome-card {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+    padding:
+        22px 25px;
+
+    animation:
+        cardAppear .6s ease .1s both;
+}
+
+
+.welcome-text {
+    min-width: 0;
+}
+
+
+.hello {
+    display:
+        inline-block;
+
+    margin-bottom:
+        6px;
+
+    color:
+        #b8d5f7;
+
+    font-size:
+        .82rem;
+
+    font-weight:
+        700;
+}
+
+
+.welcome-text h2 {
+    font-size:
+        clamp(
+            1.1rem,
+            4vw,
+            1.5rem
+        );
+
+    margin-bottom:
+        5px;
+
+    color:
+        white;
+}
+
+
+.welcome-text p {
+    color:
+        var(--muted);
+
+    font-size:
+        .8rem;
+
+    line-height:
+        1.5;
+}
+
+
+.welcome-character {
+    width:
+        65px;
+
+    height:
+        65px;
+
+    flex-shrink:
+        0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        20px;
+
+    background:
+        rgba(255, 216, 77, .12);
+
+    border:
+        1px solid
+        rgba(255, 216, 77, .2);
+
+    font-size:
+        2.2rem;
+
+    animation:
+        bagBounce 3s ease-in-out infinite;
+}
+
+
+@keyframes bagBounce {
+
+    0%,
+    100% {
+        transform:
+            rotate(0)
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            rotate(5deg)
+            translateY(-5px);
+    }
+}
+
+
+/* =========================================================
+   CLOCK
+========================================================= */
+
+.clock-card {
+    padding:
+        28px 20px;
+
+    text-align:
+        center;
+
+    animation:
+        cardAppear .6s ease .2s both;
+}
+
+
+.clock-icon {
+    font-size:
+        35px;
+
+    margin-bottom:
+        8px;
+
+    animation:
+        clockMove 2s ease-in-out infinite;
+}
+
+
+@keyframes clockMove {
+
+    0%,
+    100% {
+        transform:
+            rotate(-5deg);
+    }
+
+    50% {
+        transform:
+            rotate(5deg)
+            scale(1.08);
+    }
+}
+
+
+#clock {
+    font-size:
+        clamp(
+            3.1rem,
+            11vw,
+            6rem
+        );
+
+    font-weight:
+        900;
+
+    line-height:
+        1;
+
+    letter-spacing:
+        2px;
+
+    color:
+        white;
+
+    text-shadow:
+        0 5px 20px
+        rgba(0, 0, 0, .3);
+}
+
+
+#date {
+    margin-top:
+        10px;
+
+    color:
+        #afc5df;
+
+    font-size:
+        .9rem;
+
+    font-weight:
+        600;
+}
+
+
+.clock-status {
+    display:
+        inline-block;
+
+    margin-top:
+        10px;
+
+    padding:
+        5px 10px;
+
+    border-radius:
+        20px;
+
+    background:
+        rgba(255, 255, 255, .06);
+
+    color:
+        #829bb8;
+
+    font-size:
+        .65rem;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status-card {
+    padding:
+        20px;
+
+    animation:
+        cardAppear .6s ease .3s both;
+}
+
+
+.status-header {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        10px;
+}
+
+
+.section-label {
+    color:
+        #8ea7c5;
+
+    font-size:
+        .65rem;
+
+    letter-spacing:
+        2px;
+
+    margin-bottom:
+        5px;
+}
+
+
+#status {
+    color:
+        white;
+
+    font-size:
+        .95rem;
+
+    font-weight:
+        800;
+}
+
+
+/* =========================================================
+   STATUS LIGHT
+========================================================= */
+
+.status-light {
+    width:
+        13px;
+
+    height:
+        13px;
+
+    border-radius:
+        50%;
+
+    flex-shrink:
+        0;
+}
+
+
+.status-light.off {
+    background:
+        var(--red);
+
+    box-shadow:
+        0 0 12px
+        rgba(255, 97, 114, .7);
+}
+
+
+.status-light.on {
+    background:
+        var(--green);
+
+    box-shadow:
+        0 0 15px
+        rgba(66, 214, 138, .8);
+
+    animation:
+        lightPulse 1.5s infinite;
+}
+
+
+@keyframes lightPulse {
+
+    50% {
+        opacity:
+            .45;
+    }
+}
+
+
+/* =========================================================
+   NEXT BELL
+========================================================= */
+
+.next-bell {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        15px;
+
+    margin-top:
+        17px;
+
+    padding:
+        15px;
+
+    border-radius:
+        19px;
+
+    background:
+        rgba(0, 0, 0, .13);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, .08);
+}
+
+
+.next-icon {
+    width:
+        48px;
+
+    height:
+        48px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    flex-shrink:
+        0;
+
+    border-radius:
+        15px;
+
+    background:
+        rgba(255, 216, 77, .13);
+
+    font-size:
+        1.5rem;
+}
+
+
+.next-label {
+    color:
+        #8fa7c1;
+
+    font-size:
+        .63rem;
+
+    letter-spacing:
+        1.5px;
+}
+
+
+#nextBell {
+    margin-top:
+        3px;
+
+    color:
+        var(--yellow);
+
+    font-size:
+        1.1rem;
+
+    font-weight:
+        900;
+}
+
+
+/* =========================================================
+   CONTROL BUTTON
+========================================================= */
+
+.control-card {
+    padding:
+        18px;
+
+    text-align:
+        center;
+
+    animation:
+        cardAppear .6s ease .4s both;
+}
+
+
+.main-button {
+    width:
+        100%;
+
+    min-height:
+        58px;
+
+    border:
+        none;
+
+    border-radius:
+        19px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        10px;
+
+    color:
+        white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #398cff,
+            #1762c7
+        );
+
+    box-shadow:
+        0 10px 25px
+        rgba(20, 90, 200, .35),
+
+        inset
+        0 1px 0
+        rgba(255, 255, 255, .3);
+
+    font-size:
+        .9rem;
+
+    font-weight:
+        900;
+
+    cursor:
+        pointer;
+
+    transition:
+        .25s ease;
+
+    -webkit-tap-highlight-color:
+        transparent;
+}
+
+
+.main-button:hover {
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 15px 30px
+        rgba(20, 90, 200, .45);
+}
+
+
+.main-button:active {
+    transform:
+        scale(.97);
+}
+
+
+.main-button.active {
+    background:
+        linear-gradient(
+            135deg,
+            #42d68a,
+            #15995c
+        );
+
+    box-shadow:
+        0 10px 25px
+        rgba(40, 200, 120, .3);
+}
+
+
+.button-icon {
+    font-size:
+        1.2rem;
+}
+
+
+.button-info {
+    margin-top:
+        9px;
+
+    color:
+        #819ab8;
+
+    font-size:
+        .65rem;
+}
+
+
+/* =========================================================
+   SCHEDULE
+========================================================= */
+
+.schedule-card {
+    padding:
+        0;
+
+    animation:
+        cardAppear .6s ease .5s both;
+}
+
+
+.schedule-header {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        13px;
+
+    padding:
+        20px 20px 13px;
+}
+
+
+.schedule-title-icon {
+    width:
+        48px;
+
+    height:
+        48px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    flex-shrink:
+        0;
+
+    border-radius:
+        15px;
+
+    background:
+        rgba(77, 163, 255, .12);
+
+    border:
+        1px solid
+        rgba(77, 163, 255, .18);
+
+    font-size:
+        1.4rem;
+}
+
+
+.schedule-header h2 {
+    color:
+        white;
+
+    font-size:
+        1.15rem;
+}
+
+
+.schedule-header p {
+    margin-top:
+        3px;
+
+    color:
+        #849db9;
+
+    font-size:
+        .68rem;
+}
+
+
+/* =========================================================
+   SCHEDULE LIST
+========================================================= */
+
+.schedule-list {
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        9px;
+
+    padding:
+        5px 15px 18px;
+}
+
+
+.schedule-item {
+    display:
+        grid;
+
+    grid-template-columns:
+        30px 48px 1fr auto;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
+
+    min-height:
+        66px;
+
+    padding:
+        8px 10px;
+
+    border-radius:
+        17px;
+
+    background:
+        rgba(255, 255, 255, .055);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, .08);
+
+    transition:
+        .25s ease;
+}
+
+
+.schedule-item:hover {
+    background:
+        rgba(255, 255, 255, .11);
+
+    transform:
+        translateX(4px);
+}
+
+
+.schedule-number {
+    width:
+        25px;
+
+    height:
+        25px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(255, 255, 255, .07);
+
+    color:
+        #819bb8;
+
+    font-size:
+        .68rem;
+
+    font-weight:
+        800;
+}
+
+
+.schedule-icon {
+    width:
+        46px;
+
+    height:
+        46px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        14px;
+
+    background:
+        rgba(255, 255, 255, .08);
+
+    font-size:
+        1.35rem;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, .08);
+
+    transition:
+        .25s ease;
+}
+
+
+.schedule-item:hover .schedule-icon {
+    transform:
+        rotate(-7deg)
+        scale(1.08);
+}
+
+
+.schedule-info {
+    min-width:
+        0;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+}
+
+
+.schedule-info strong {
+    color:
+        #eef6ff;
+
+    font-size:
+        .82rem;
+
+    white-space:
+        nowrap;
+
+    overflow:
+        hidden;
+
+    text-overflow:
+        ellipsis;
+}
+
+
+.schedule-info span {
+    margin-top:
+        3px;
+
+    color:
+        #7892af;
+
+    font-size:
+        .62rem;
+
+    white-space:
+        nowrap;
+
+    overflow:
+        hidden;
+
+    text-overflow:
+        ellipsis;
+}
+
+
+.schedule-time {
+    padding:
+        7px 10px;
+
+    border-radius:
+        11px;
+
+    background:
+        rgba(255, 216, 77, .11);
+
+    border:
+        1px solid
+        rgba(255, 216, 77, .18);
+
+    color:
+        #ffe477;
+
+    font-size:
+        .75rem;
+
+    font-weight:
+        900;
+
+    white-space:
+        nowrap;
+}
+
+
+/* =========================================================
+   ACTIVE BELL
+========================================================= */
+
+.schedule-item.active {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 216, 77, .20),
+            rgba(255, 159, 67, .10)
+        );
+
+    border:
+        2px solid
+        rgba(255, 216, 77, .55);
+
+    box-shadow:
+        0 0 25px
+        rgba(255, 216, 77, .17);
+
+    animation:
+        bellActive .7s ease-in-out infinite alternate;
+}
+
+
+.schedule-item.active .schedule-icon {
+    animation:
+        bellShake .35s infinite;
+}
+
+
+@keyframes bellShake {
+
+    0%,
+    100% {
+        transform:
+            rotate(0);
+    }
+
+    25% {
+        transform:
+            rotate(-12deg);
+    }
+
+    75% {
+        transform:
+            rotate(12deg);
+    }
+}
+
+
+@keyframes bellActive {
+
+    from {
+        transform:
+            scale(1);
+    }
+
+    to {
+        transform:
+            scale(1.012);
+    }
+}
+
+
+/* =========================================================
+   MOTIVATION
+========================================================= */
+
+.motivation-card {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        14px;
+
+    padding:
+        17px 20px;
+
+    animation:
+        cardAppear .6s ease .6s both;
+}
+
+
+.motivation-icon {
+    width:
+        48px;
+
+    height:
+        48px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    flex-shrink:
+        0;
+
+    border-radius:
+        15px;
+
+    background:
+        rgba(255, 216, 77, .12);
+
+    font-size:
+        1.5rem;
+
+    animation:
+        starPulse 2s infinite;
+}
+
+
+@keyframes starPulse {
+
+    50% {
+        transform:
+            scale(1.1)
+            rotate(5deg);
+    }
+}
+
+
+.motivation-card strong {
+    color:
+        #ffe477;
+
+    font-size:
+        .75rem;
+
+    letter-spacing:
+        1px;
+}
+
+
+.motivation-card p {
+    margin-top:
+        3px;
+
+    color:
+        #9cb2cc;
+
+    font-size:
+        .7rem;
+
+    line-height:
+        1.4;
+}
+
+
+/* =========================================================
+   INSTALL POPUP
+========================================================= */
+
+.install-popup {
+    position:
+        fixed;
+
+    inset:
+        0;
+
+    display:
+        none;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        20px;
+
+    background:
+        rgba(2, 10, 25, .65);
+
+    backdrop-filter:
+        blur(12px);
+
+    -webkit-backdrop-filter:
+        blur(12px);
+
+    z-index:
+        9999;
+}
+
+
+.install-popup.show {
+    display:
+        flex;
+}
+
+
+.install-box {
+    width:
+        min(
+            420px,
+            100%
+        );
+
+    padding:
+        30px 25px;
+
+    text-align:
+        center;
+
+    border-radius:
+        28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(30, 62, 105, .95),
+            rgba(12, 35, 67, .96)
+        );
+
+    border:
+        1px solid
+        rgba(255, 255, 255, .18);
+
+    box-shadow:
+        0 30px 70px
+        rgba(0, 0, 0, .5);
+
+    animation:
+        popupIn .35s ease;
+}
+
+
+@keyframes popupIn {
+
+    from {
+        opacity: 0;
+
+        transform:
+            scale(.9)
+            translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            scale(1)
+            translateY(0);
+    }
+}
+
+
+.install-big-icon {
+    font-size:
+        3.5rem;
+
+    margin-bottom:
+        10px;
+}
+
+
+.install-box h2 {
+    color:
+        white;
+
+    font-size:
+        1.4rem;
+}
+
+
+.install-box p {
+    margin:
+        9px 0 20px;
+
+    color:
+        #9eb6d2;
+
+    font-size:
+        .8rem;
+
+    line-height:
+        1.5;
+}
+
+
+.install-buttons {
+    display:
+        flex;
+
+    gap:
+        10px;
+}
+
+
+.install-buttons button {
+    flex:
+        1;
+
+    min-height:
+        48px;
+
+    border:
+        none;
+
+    border-radius:
+        14px;
+
+    cursor:
+        pointer;
+
+    font-weight:
+        900;
+
+    transition:
+        .2s ease;
+}
+
+
+#installButton {
+    color:
+        white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #398cff,
+            #1762c7
+        );
+}
+
+
+#laterButton {
+    color:
+        #bfd0e4;
+
+    background:
+        rgba(255, 255, 255, .08);
+}
+
+
+.install-buttons button:active {
+    transform:
+        scale(.96);
+}
+
+
+/* =========================================================
+   BELL POPUP
+========================================================= */
+
+.bell-popup {
+    position:
+        fixed;
+
+    inset:
+        0;
+
+    display:
+        none;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        20px;
+
+    background:
+        rgba(2, 10, 25, .65);
+
+    backdrop-filter:
+        blur(10px);
+
+    -webkit-backdrop-filter:
+        blur(10px);
+
+    z-index:
+        9998;
+}
+
+
+.bell-popup.show {
+    display:
+        flex;
+}
+
+
+.bell-content {
+    width:
+        min(
+            400px,
+            100%
+        );
+
+    padding:
+        30px 20px;
+
+    text-align:
+        center;
+
+    border-radius:
+        28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(39, 70, 112, .96),
+            rgba(10, 31, 60, .97)
+        );
+
+    border:
+        1px solid
+        rgba(255, 216, 77, .35);
+
+    box-shadow:
+        0 25px 70px
+        rgba(0, 0, 0, .5);
+
+    animation:
+        bellPopup .4s ease;
+}
+
+
+@keyframes bellPopup {
+
+    0% {
+        transform:
+            scale(.7)
+            rotate(-3deg);
+
+        opacity:
+            0;
+    }
+
+    70% {
+        transform:
+            scale(1.05)
+            rotate(2deg);
+    }
+
+    100% {
+        transform:
+            scale(1)
+            rotate(0);
+
+        opacity:
+            1;
+    }
+}
+
+
+.big-bell {
+    font-size:
+        4rem;
+
+    animation:
+        bigBellShake .35s infinite;
+}
+
+
+@keyframes bigBellShake {
+
+    0%,
+    100% {
+        transform:
+            rotate(0);
+    }
+
+    25% {
+        transform:
+            rotate(-12deg);
+    }
+
+    75% {
+        transform:
+            rotate(12deg);
+    }
+}
+
+
+.bell-title {
+    margin-top:
+        10px;
+
+    color:
+        #ffe477;
+
+    font-size:
+        1.5rem;
+
+    font-weight:
+        900;
+}
+
+
+.bell-message {
+    margin-top:
+        7px;
+
+    color:
+        #c0d2e8;
+
+    font-size:
+        .85rem;
+}
+
+
+.stars {
+    margin-top:
+        17px;
+
+    font-size:
+        1.2rem;
+
+    animation:
+        starMove 1s infinite alternate;
+}
+
+
+@keyframes starMove {
+
+    from {
+        transform:
+            scale(.95);
+    }
+
+    to {
+        transform:
+            scale(1.05);
+    }
+}
+
+
+/* =========================================================
+   INSTALL BUTTON - DI DALAM HALAMAN
+   TIDAK MENUTUP FOOTER
+========================================================= */
+
+.install-area {
+    width:
+        100%;
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    margin:
+        5px 0 22px;
+}
+
+
+.fixed-install-button {
+    width:
+        min(
+            430px,
+            100%
+        );
+
+    min-height:
+        64px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        12px;
+
+    padding:
+        9px 13px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, .20);
+
+    border-radius:
+        20px;
+
+    color:
+        white;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(38, 105, 190, .75),
+            rgba(15, 48, 91, .82)
+        );
+
+    backdrop-filter:
+        blur(25px)
+        saturate(160%);
+
+    -webkit-backdrop-filter:
+        blur(25px)
+        saturate(160%);
+
+    box-shadow:
+        0 12px 30px
+        rgba(0, 0, 0, .28),
+
+        inset
+        0 1px 0
+        rgba(255, 255, 255, .20);
+
+    cursor:
+        pointer;
+
+    transition:
+        .25s ease;
+
+    animation:
+        installFloat 3s ease-in-out infinite;
+}
+
+
+.fixed-install-button:hover {
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 17px 35px
+        rgba(0, 0, 0, .35),
+
+        0 0 20px
+        rgba(57, 140, 255, .15);
+}
+
+
+.fixed-install-button:active {
+    transform:
+        scale(.97);
+}
+
+
+.fixed-install-icon {
+    width:
+        43px;
+
+    height:
+        43px;
+
+    flex-shrink:
+        0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        14px;
+
+    background:
+        rgba(255, 255, 255, .11);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, .12);
+
+    font-size:
+        1.35rem;
+}
+
+
+.fixed-install-text {
+    flex:
+        1;
+
+    min-width:
+        0;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    text-align:
+        left;
+}
+
+
+.fixed-install-text strong {
+    color:
+        white;
+
+    font-size:
+        .78rem;
+
+    font-weight:
+        900;
+}
+
+
+.fixed-install-text small {
+    margin-top:
+        3px;
+
+    color:
+        #a9c1dc;
+
+    font-size:
+        .6rem;
+}
+
+
+.fixed-install-arrow {
+    width:
+        30px;
+
+    height:
+        30px;
+
+    flex-shrink:
+        0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        10px;
+
+    background:
+        rgba(255, 255, 255, .08);
+
+    color:
+        #cfe2fa;
+
+    font-size:
+        1.5rem;
+}
+
+
+@keyframes installFloat {
+
+    0%,
+    100% {
+        transform:
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translateY(-3px);
+    }
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    text-align:
+        center;
+
+    padding:
+        5px 10px 20px;
+
+    color:
+        #8198b3;
+
+    font-size:
+        .65rem;
+
+    line-height:
+        1.7;
+}
+
+
+footer div {
+    color:
+        #9bb1cb;
+
+    font-weight:
+        700;
+}
+
+
+/* =========================================================
+   CARD ANIMATION
+========================================================= */
+
+@keyframes cardAppear {
+
+    from {
+        opacity:
+            0;
+
+        transform:
+            translateY(20px);
+    }
+
+    to {
+        opacity:
+            1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .container {
+        width:
+            calc(100% - 24px);
+
+        padding-top:
+            25px;
+    }
+
+
+    .welcome-card,
+    .clock-card,
+    .status-card,
+    .control-card,
+    .schedule-card,
+    .motivation-card {
+        border-radius:
+            23px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .container {
+        width:
+            calc(100% - 14px);
+
+        padding:
+            18px 0;
+    }
+
+
+    .header {
+        margin-bottom:
+            17px;
+    }
+
+
+    .logo-wrapper {
+        width:
+            92px;
+
+        height:
+            92px;
+    }
+
+
+    .logo {
+        width:
+            84px;
+
+        height:
+            84px;
+
+        border-width:
+            3px;
+    }
+
+
+    .logo-ring {
+        width:
+            92px;
+
+        height:
+            92px;
+    }
+
+
+    .small-title {
+        font-size:
+            .52rem;
+
+        letter-spacing:
+            2px;
+    }
+
+
+    .school-title h1 {
+        font-size:
+            1.8rem;
+    }
+
+
+    .school-title h2 {
+        font-size:
+            .68rem;
+
+        letter-spacing:
+            1px;
+    }
+
+
+    .welcome-card {
+        padding:
+            17px;
+
+        border-radius:
+            20px;
+    }
+
+
+    .hello {
+        font-size:
+            .7rem;
+    }
+
+
+    .welcome-text h2 {
+        font-size:
+            1.05rem;
+    }
+
+
+    .welcome-text p {
+        font-size:
+            .67rem;
+    }
+
+
+    .welcome-character {
+        width:
+            52px;
+
+        height:
+            52px;
+
+        border-radius:
+            15px;
+
+        font-size:
+            1.7rem;
+    }
+
+
+    .clock-card {
+        padding:
+            23px 10px;
+
+        border-radius:
+            20px;
+    }
+
+
+    .clock-icon {
+        font-size:
+            28px;
+    }
+
+
+    #clock {
+        font-size:
+            clamp(
+                2.6rem,
+                15vw,
+                4rem
+            );
+
+        letter-spacing:
+            0;
+    }
+
+
+    #date {
+        font-size:
+            .7rem;
+    }
+
+
+    .clock-status {
+        font-size:
+            .57rem;
+    }
+
+
+    .status-card {
+        padding:
+            16px;
+
+        border-radius:
+            20px;
+    }
+
+
+    #status {
+        font-size:
+            .78rem;
+    }
+
+
+    .next-bell {
+        padding:
+            12px;
+
+        border-radius:
+            15px;
+    }
+
+
+    .next-icon {
+        width:
+            40px;
+
+        height:
+            40px;
+
+        font-size:
+            1.2rem;
+    }
+
+
+    #nextBell {
+        font-size:
+            .95rem;
+    }
+
+
+    .control-card {
+        padding:
+            13px;
+
+        border-radius:
+            20px;
+    }
+
+
+    .main-button {
+        min-height:
+            52px;
+
+        border-radius:
+            16px;
+
+        font-size:
+            .78rem;
+    }
+
+
+    .button-info {
+        font-size:
+            .58rem;
+    }
+
+
+    .schedule-header {
+        padding:
+            17px 15px 10px;
+    }
+
+
+    .schedule-title-icon {
+        width:
+            40px;
+
+        height:
+            40px;
+
+        font-size:
+            1.2rem;
+
+        border-radius:
+            12px;
+    }
+
+
+    .schedule-header h2 {
+        font-size:
+            1rem;
+    }
+
+
+    .schedule-header p {
+        font-size:
+            .6rem;
+    }
+
+
+    .schedule-list {
+        padding:
+            5px 9px 13px;
+
+        gap:
+            7px;
+    }
+
+
+    .schedule-item {
+        grid-template-columns:
+            24px 38px 1fr auto;
+
+        gap:
+            7px;
+
+        min-height:
+            58px;
+
+        padding:
+            7px;
+
+        border-radius:
+            14px;
+    }
+
+
+    .schedule-number {
+        width:
+            22px;
+
+        height:
+            22px;
+
+        font-size:
+            .58rem;
+    }
+
+
+    .schedule-icon {
+        width:
+            38px;
+
+        height:
+            38px;
+
+        border-radius:
+            11px;
+
+        font-size:
+            1.05rem;
+    }
+
+
+    .schedule-info strong {
+        font-size:
+            .68rem;
+    }
+
+
+    .schedule-info span {
+        font-size:
+            .53rem;
+    }
+
+
+    .schedule-time {
+        padding:
+            5px 7px;
+
+        border-radius:
+            9px;
+
+        font-size:
+            .62rem;
+    }
+
+
+    .motivation-card {
+        padding:
+            13px 15px;
+
+        border-radius:
+            19px;
+    }
+
+
+    .motivation-icon {
+        width:
+            40px;
+
+        height:
+            40px;
+
+        font-size:
+            1.25rem;
+
+        border-radius:
+            12px;
+    }
+
+
+    .motivation-card strong {
+        font-size:
+            .65rem;
+    }
+
+
+    .motivation-card p {
+        font-size:
+            .58rem;
+    }
+
+
+    /* INSTALL BUTTON */
+
+    .install-area {
+        margin:
+            3px 0 18px;
+    }
+
+
+    .fixed-install-button {
+        min-height:
+            58px;
+
+        padding:
+            8px 10px;
+
+        border-radius:
+            17px;
+    }
+
+
+    .fixed-install-icon {
+        width:
+            39px;
+
+        height:
+            39px;
+
+        border-radius:
+            12px;
+
+        font-size:
+            1.15rem;
+    }
+
+
+    .fixed-install-text strong {
+        font-size:
+            .7rem;
+    }
+
+
+    .fixed-install-text small {
+        font-size:
+            .55rem;
+    }
+
+
+    .fixed-install-arrow {
+        width:
+            27px;
+
+        height:
+            27px;
+
+        font-size:
+            1.25rem;
+    }
+
+
+    /* INSTALL POPUP */
+
+    .install-box {
+        padding:
+            25px 18px;
+
+        border-radius:
+            23px;
+    }
+
+
+    .install-big-icon {
+        font-size:
+            3rem;
+    }
+
+
+    .install-box h2 {
+        font-size:
+            1.2rem;
+    }
+
+
+    .install-box p {
+        font-size:
+            .7rem;
+    }
+
+
+    /* BELL POPUP */
+
+    .bell-content {
+        padding:
+            25px 17px;
+
+        border-radius:
+            23px;
+    }
+
+
+    .big-bell {
+        font-size:
+            3.2rem;
+    }
+
+
+    .bell-title {
+        font-size:
+            1.25rem;
+    }
+
+
+    .bell-message {
+        font-size:
+            .75rem;
+    }
+}
+
+
+/* =========================================================
+   HP SANGAT KECIL
+========================================================= */
+
+@media (max-width: 360px) {
+
+    .container {
+        width:
+            calc(100% - 10px);
+    }
+
+
+    .school-title h1 {
+        font-size:
+            1.55rem;
+    }
+
+
+    #clock {
+        font-size:
+            2.45rem;
+    }
+
+
+    .welcome-character {
+        display:
+            none;
+    }
+
+
+    .schedule-item {
+        grid-template-columns:
+            20px 34px 1fr auto;
+
+        gap:
+            5px;
+    }
+
+
+    .schedule-icon {
+        width:
+            34px;
+
+        height:
+            34px;
+
+        font-size:
+            .95rem;
+    }
+
+
+    .schedule-info strong {
+        font-size:
+            .63rem;
+    }
+
+
+    .schedule-info span {
+        display:
+            none;
+    }
+
+
+    .schedule-time {
+        font-size:
+            .58rem;
+
+        padding:
+            4px 6px;
+    }
+
+
+    .fixed-install-button {
+        width:
+            calc(100% - 14px);
+
+        min-height:
+            55px;
+    }
+
+
+    .fixed-install-text strong {
+        font-size:
+            .65rem;
+    }
+
+
+    .fixed-install-text small {
+        font-size:
+            .5rem;
+    }
+}
+
+
+/* =========================================================
+   TOUCH DEVICE
+========================================================= */
+
+@media (hover: none) {
+
+    .schedule-item:hover {
+        transform:
+            none;
+    }
+
+
+    .main-button:hover {
+        transform:
+            none;
+    }
+
+
+    .fixed-install-button:hover {
+        transform:
+            none;
+    }
+}
+
+
+/* =========================================================
+   REDUCE MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation:
+            none !important;
+
+        transition:
+            none !important;
+    }
+}
+/* =========================================================
+   TEST BUTTON
+========================================================= */
+
+.test-area {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.test-button {
+    width: 100%;
+    max-width: 320px;
+
+    padding: 13px 20px;
+
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 16px;
+
+    background: rgba(255,255,255,0.08);
+
+    color: white;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.test-button:hover {
+    background: rgba(255,255,255,0.15);
+    transform: translateY(-2px);
+}
+
+.test-button:active {
+    transform: scale(0.97);
+}

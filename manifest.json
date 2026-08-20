@@ -1,0 +1,19 @@
+{
+    "name": "Bel Sekolah SD Advent Sabu Timur",
+    "short_name": "Bel Sekolah",
+    "description": "Sistem bel otomatis SD Advent Sabu Timur",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "background_color": "#0f172a",
+    "theme_color": "#1e3a8a",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "logo.jpg",
+            "sizes": "512x512",
+            "type": "image/jpeg",
+            "purpose": "any"
+        }
+    ]
+}

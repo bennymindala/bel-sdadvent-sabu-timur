@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Bel Sekolah | SD Advent Sabu Timur</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+
+    <link rel="icon" href="logo.jpg">
+</head>
+
+<body>
+
+    <!-- BACKGROUND ANIMATION -->
+    <div class="background-animation">
+        <span>⭐</span>
+        <span>✨</span>
+        <span>🌈</span>
+        <span>⭐</span>
+        <span>☁️</span>
+        <span>✨</span>
+        <span>🌟</span>
+        <span>☁️</span>
+    </div>
+
+
+    <main class="container">
+
+        <!-- HEADER -->
+        <header class="header">
+
+            <div class="logo-wrapper">
+
+                <div class="logo-ring"></div>
+
+                <img
+                    src="logo.jpg"
+                    alt="Logo SD Advent Sabu Timur"
+                    class="logo"
+                >
+
+            </div>
+
+            <div class="school-title">
+
+                <div class="small-title">
+                    SISTEM INFORMASI SEKOLAH
+                </div>
+
+                <h1>
+                    🔔 BEL SEKOLAH
+                </h1>
+
+                <h2>
+                    SD ADVENT SABU TIMUR
+                </h2>
+
+            </div>
+
+        </header>
+
+
+        <!-- WELCOME -->
+        <section class="welcome-card">
+
+            <div class="welcome-text">
+
+                <span class="hello">
+                    👋 Halo, anak-anak!
+                </span>
+
+                <h2>
+                    Siap belajar hari ini?
+                </h2>
+
+                <p>
+                    Jangan lupa semangat,
+                    tersenyum dan rajin belajar! 🌟
+                </p>
+
+            </div>
+
+            <div class="welcome-character">
+                🎒
+            </div>
+
+        </section>
+
+
+        <!-- CLOCK -->
+        <section class="clock-card">
+
+            <div class="clock-icon">
+                ⏰
+            </div>
+
+            <div id="clock">
+                00:00:00
+            </div>
+
+            <div id="date">
+                Memuat tanggal...
+            </div>
+
+            <div class="clock-status">
+                Waktu Indonesia Tengah
+            </div>
+
+        </section>
+
+
+        <!-- STATUS -->
+        <section class="status-card">
+
+            <div class="status-header">
+
+                <div>
+
+                    <div class="section-label">
+                        STATUS SISTEM
+                    </div>
+
+                    <div id="status">
+                        🔴 Sistem Bel Belum Aktif
+                    </div>
+
+                </div>
+
+                <div
+                    id="statusLight"
+                    class="status-light off"
+                ></div>
+
+            </div>
+
+
+            <div class="next-bell">
+
+                <div class="next-icon">
+                    🔔
+                </div>
+
+                <div>
+
+                    <div class="next-label">
+                        BEL BERIKUTNYA
+                    </div>
+
+                    <div id="nextBell">
+                        Memuat jadwal...
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- BUTTON -->
+        <section class="control-card">
+
+            <button
+                id="activateButton"
+                class="main-button"
+            >
+
+                <span class="button-icon">
+                    🔔
+                </span>
+
+                <span>
+                    AKTIFKAN SISTEM BEL
+                </span>
+
+            </button>
+
+            <p class="button-info">
+                Tekan tombol untuk mengaktifkan
+                sistem bel otomatis
+            </p>
+<div class="test-area">
+
+    <button id="testBellButton" class="test-button">
+        🧪 TES BEL SEKARANG
+    </button>
+
+</div>
+        </section>
+
+
+        <!-- SCHEDULE -->
+        <section class="schedule-card">
+
+            <div class="schedule-header">
+
+                <div class="schedule-title-icon">
+                    📅
+                </div>
+
+                <div>
+
+                    <h2>
+                        Jadwal Bel Sekolah
+                    </h2>
+
+                    <p>
+                        Jadwal kegiatan hari ini
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="schedule-list">
+
+
+                <!-- 07:15 -->
+
+                <div
+                    class="schedule-item"
+                    data-time="07:15"
+                >
+
+                    <div class="schedule-number">
+                        1
+                    </div>
+
+                    <div class="schedule-icon">
+                        🏫
+                    </div>
+
+                    <div class="schedule-info">
+
+                        <strong>
+                            Masuk Sekolah
+                        </strong>
+
+                        <span>
+                            Waktu memulai pelajaran
+                        </span>
+
+                    </div>
+
+                    <div class="schedule-time">
+                        07:15
+                    </div>
+
+                </div>
+
+
+                <!-- 09:00 -->
+
+                <div
+                    class="schedule-item"
+                    data-time="09:00"
+                >
+
+                    <div class="schedule-number">
+                        2
+                    </div>
+
+                    <div class="schedule-icon">
+                        🙏
+                    </div>
+
+                    <div class="schedule-info">
+
+                        <strong>
+                            Doa Pagi
+                        </strong>
+
+                        <span>
+                            Saatnya berdoa bersama
+                        </span>
+
+                    </div>
+
+                    <div class="schedule-time">
+                        09:00
+                    </div>
+
+                </div>
+
+
+                <!-- 09:20 -->
+
+                <div
+                    class="schedule-item"
+                    data-time="09:20"
+                >
+
+                    <div class="schedule-number">
+                        3
+                    </div>
+
+                    <div class="schedule-icon">
+                        🍎
+                    </div>
+
+                    <div class="schedule-info">
+
+                        <strong>
+                            Istirahat
+                        </strong>
+
+                        <span>
+                            Waktunya beristirahat
+                        </span>
+
+                    </div>
+
+                    <div class="schedule-time">
+                        09:20
+                    </div>
+
+                </div>
+
+
+                <!-- 09:40 -->
+
+                <div
+                    class="schedule-item"
+                    data-time="09:40"
+                >
+
+                    <div class="schedule-number">
+                        4
+                    </div>
+
+                    <div class="schedule-icon">
+                        📚
+                    </div>
+
+                    <div class="schedule-info">
+
+                        <strong>
+                            Masuk Setelah Istirahat
+                        </strong>
+
+                        <span>
+                            Kembali belajar bersama
+                        </span>
+
+                    </div>
+
+                    <div class="schedule-time">
+                        09:40
+                    </div>
+
+                </div>
+
+
+                <!-- 12:30 -->
+
+                <div
+                    class="schedule-item"
+                    data-time="12:30"
+                >
+
+                    <div class="schedule-number">
+                        5
+                    </div>
+
+                    <div class="schedule-icon">
+                        🏠
+                    </div>
+
+                    <div class="schedule-info">
+
+                        <strong>
+                            Pulang Sekolah
+                        </strong>
+
+                        <span>
+                            Sampai jumpa besok!
+                        </span>
+
+                    </div>
+
+                    <div class="schedule-time">
+                        12:30
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- MOTIVATION -->
+        <section class="motivation-card">
+
+            <div class="motivation-icon">
+                🌟
+            </div>
+
+            <div>
+
+                <strong>
+                    SEMANGAT BELAJAR!
+                </strong>
+
+                <p>
+                    "Hari ini belajar,
+                    besok menjadi hebat!"
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- AUDIO -->
+
+       <audio id="masuk" preload="auto">
+    <source src="masuk.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="doaPagi" preload="auto">
+    <source src="doa-pagi.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="istirahat" preload="auto">
+    <source src="istrahat.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="masukSetelahIstirahat" preload="auto">
+    <source src="masuk-setelah-istrahat.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="pulang" preload="auto">
+    <source src="pulang-sekolah.mp3" type="audio/mpeg">
+</audio>
+
+        <!-- INSTALL POPUP -->
+
+        <div
+            id="installPopup"
+            class="install-popup"
+        >
+
+            <div class="install-box">
+
+                <div class="install-big-icon">
+                    🔔
+                </div>
+
+                <h2>
+                    Pasang Bel Sekolah
+                </h2>
+
+                <p>
+                    Pasang aplikasi Bel Sekolah
+                    agar lebih mudah digunakan.
+                </p>
+
+                <div class="install-buttons">
+
+                    <button id="installButton">
+                        📲 INSTALL
+                    </button>
+
+                    <button id="laterButton">
+                        NANTI
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BELL POPUP -->
+
+        <div
+            id="bellPopup"
+            class="bell-popup"
+        >
+
+            <div class="bell-content">
+
+                <div class="big-bell">
+                    🔔
+                </div>
+
+                <div class="bell-title">
+                    BEL BERBUNYI!
+                </div>
+
+                <div
+                    id="bellMessage"
+                    class="bell-message"
+                >
+                    Waktunya melakukan kegiatan
+                </div>
+
+                <div class="stars">
+                    ⭐ ✨ ⭐ ✨ ⭐
+                </div>
+
+            </div>
+
+        </div>
+<!-- TOMBOL INSTALL TETAP -->
+<button id="fixedInstallButton" class="fixed-install-button">
+    <span class="fixed-install-icon">📲</span>
+    <span class="fixed-install-text">
+        <strong>Install Bel Sekolah</strong>
+        <small>Pasang di layar utama</small>
+    </span>
+    <span class="fixed-install-arrow">›</span>
+</button>
+
+        <footer>
+
+            <div>
+                🔔 SD ADVENT SABU TIMUR
+            </div>
+
+            <span>
+                Sistem Bel Sekolah • 2027
+            </span>
+
+        </footer>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
