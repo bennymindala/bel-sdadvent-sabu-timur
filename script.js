@@ -1,47 +1,81 @@
 /* =========================================================
    🔔 BEL SEKOLAH
    SD ADVENT SABU TIMUR
-   FINAL VERSION
-   WITA - ANDROID - SAFARI/iPHONE
+
+   FITUR:
+
+   ✅ Unlock audio tanpa membunyikan MP3
+   ✅ Android Chrome
+   ✅ Safari/iPhone sebisa mungkin
+   ✅ Audio sesuai jadwal
+   ✅ Aktif / nonaktif
+   ✅ Retry audio
+   ✅ Cek file MP3
+   ✅ Bel berikutnya
+   ✅ Animasi jadwal
+   ✅ Popup
+   ✅ Anti double alarm
+   ✅ Mode Uji Coba Real-Time
 ========================================================= */
 
 
 /* =========================================================
-   JADWAL BEL
+   MODE UJI COBA
 ========================================================= */
 
-const bellSchedule = [
+let testMode = false;
+
+
+/* =========================================================
+   JADWAL NORMAL
+========================================================= */
+
+const normalSchedule = [
+
     {
         time: "07:15",
         name: "Masuk Sekolah",
         message: "Waktunya masuk sekolah!",
         audioId: "masuk"
     },
+
     {
         time: "09:00",
         name: "Doa Pagi",
         message: "Saatnya doa pagi bersama.",
         audioId: "doaPagi"
     },
+
     {
         time: "09:20",
         name: "Istirahat",
         message: "Waktunya beristirahat.",
         audioId: "istirahat"
     },
+
     {
         time: "09:40",
         name: "Masuk Setelah Istirahat",
         message: "Waktunya kembali belajar.",
         audioId: "masukSetelahIstirahat"
     },
+
     {
         time: "12:30",
         name: "Pulang Sekolah",
         message: "Pelajaran hari ini selesai. Sampai jumpa!",
         audioId: "pulang"
     }
+
 ];
+
+
+/* =========================================================
+   JADWAL AKTIF
+========================================================= */
+
+let bellSchedule =
+    [...normalSchedule];
 
 
 /* =========================================================
@@ -72,11 +106,14 @@ const bellPopup =
 const bellMessage =
     document.getElementById("bellMessage");
 
+const testModeButton =
+    document.getElementById("testModeButton");
+
+const testStatus =
+    document.getElementById("testStatus");
+
 const installButton =
     document.getElementById("installButton");
-
-const testBellButton =
-    document.getElementById("testBellButton");
 
 const laterButton =
     document.getElementById("laterButton");
@@ -89,41 +126,70 @@ const fixedInstallButton =
 
 
 /* =========================================================
-   AUDIO
+   AUDIO ELEMENT
 ========================================================= */
 
 const audioElements = {};
 
-bellSchedule.forEach(bell => {
 
-    const audio =
-        document.getElementById(bell.audioId);
+bellSchedule.forEach(
+    bell => {
 
-    if (audio) {
+        const audio =
+            document.getElementById(
+                bell.audioId
+            );
 
-        audio.preload = "auto";
 
-        audioElements[bell.audioId] =
-            audio;
+        if (audio) {
+
+            audio.preload =
+                "auto";
+
+
+            audioElements[
+                bell.audioId
+            ] = audio;
+
+        }
 
     }
-
-});
+);
 
 
 /* =========================================================
-   SISTEM
+   SILENT AUDIO
 ========================================================= */
 
-let systemActive = false;
+const silentAudio =
+    document.getElementById(
+        "silentAudio"
+    );
 
-let audioUnlocked = false;
 
-let lastPlayedKey = "";
+/* =========================================================
+   STATE
+========================================================= */
 
-let currentPlayingBell = null;
+let systemActive =
+    false;
 
-const MAX_RETRY = 3;
+let audioUnlocked =
+    false;
+
+let lastPlayedKey =
+    "";
+
+let currentPlayingAudio =
+    null;
+
+
+/* =========================================================
+   RETRY
+========================================================= */
+
+const MAX_RETRY =
+    3;
 
 
 /* =========================================================
@@ -132,58 +198,28 @@ const MAX_RETRY = 3;
 
 function getWitaDate() {
 
-    const now = new Date();
+    const now =
+        new Date();
+
 
     const witaString =
         now.toLocaleString(
             "en-US",
             {
-                timeZone: "Asia/Makassar"
+                timeZone:
+                    "Asia/Makassar"
             }
         );
 
-    return new Date(witaString);
-}
 
-
-/* =========================================================
-   FORMAT JAM
-========================================================= */
-
-function formatTime(date) {
-
-    return date.toLocaleTimeString(
-        "id-ID",
-        {
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-            hour12: false
-        }
+    return new Date(
+        witaString
     );
 }
 
 
 /* =========================================================
-   FORMAT TANGGAL
-========================================================= */
-
-function formatDate(date) {
-
-    return date.toLocaleDateString(
-        "id-ID",
-        {
-            weekday: "long",
-            day: "numeric",
-            month: "long",
-            year: "numeric"
-        }
-    );
-}
-
-
-/* =========================================================
-   UPDATE JAM
+   JAM
 ========================================================= */
 
 function updateClock() {
@@ -195,7 +231,15 @@ function updateClock() {
     if (clockElement) {
 
         clockElement.textContent =
-            formatTime(now);
+            now.toLocaleTimeString(
+                "id-ID",
+                {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit",
+                    hour12: false
+                }
+            );
 
     }
 
@@ -203,14 +247,28 @@ function updateClock() {
     if (dateElement) {
 
         dateElement.textContent =
-            formatDate(now);
+            now.toLocaleDateString(
+                "id-ID",
+                {
+                    weekday: "long",
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric"
+                }
+            );
 
     }
 
 
-    checkBell(now);
+    checkBell(
+        now
+    );
 
-    updateNextBell(now);
+
+    updateNextBell(
+        now
+    );
+
 }
 
 
@@ -230,24 +288,34 @@ function checkBell(now) {
     }
 
 
-    const hours =
+    const hour =
         String(
             now.getHours()
-        ).padStart(2, "0");
+        ).padStart(
+            2,
+            "0"
+        );
 
 
-    const minutes =
+    const minute =
         String(
             now.getMinutes()
-        ).padStart(2, "0");
+        ).padStart(
+            2,
+            "0"
+        );
 
 
     const currentTime =
-        `${hours}:${minutes}`;
+        `${hour}:${minute}`;
 
 
     const dateKey =
-        `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+        [
+            now.getFullYear(),
+            now.getMonth() + 1,
+            now.getDate()
+        ].join("-");
 
 
     const uniqueKey =
@@ -255,10 +323,13 @@ function checkBell(now) {
 
 
     /*
-     * MENCEGAH BEL BERBUNYI 2X
-     */
+       Anti double alarm
+    */
 
-    if (lastPlayedKey === uniqueKey) {
+    if (
+        lastPlayedKey ===
+        uniqueKey
+    ) {
 
         return;
     }
@@ -267,51 +338,67 @@ function checkBell(now) {
     const bell =
         bellSchedule.find(
             item =>
-                item.time === currentTime
+                item.time ===
+                currentTime
         );
 
 
     if (!bell) {
-
         return;
     }
 
+
+    /*
+       Tandai SEBELUM play
+       agar tidak double.
+    */
 
     lastPlayedKey =
         uniqueKey;
 
 
-    playBell(bell);
+    playBell(
+        bell
+    );
+
 }
 
 
 /* =========================================================
-   MAIN PLAY BELL
+   PLAY BELL
 ========================================================= */
 
-async function playBell(bell) {
+async function playBell(
+    bell
+) {
 
     const audio =
-        audioElements[bell.audioId];
+        audioElements[
+            bell.audioId
+        ];
 
 
     if (!audio) {
 
         showAudioError(
-            `Audio "${bell.name}" tidak ditemukan.`
+            `Audio ${bell.audioId} tidak ditemukan.`
         );
 
         return;
     }
 
 
-    currentPlayingBell =
-        bell;
+    /*
+       Jika audio lain sedang berjalan,
+       hentikan terlebih dahulu.
+    */
+
+    stopAllAudio();
 
 
     /*
-     * ANIMASI JADWAL
-     */
+       Animasi
+    */
 
     highlightSchedule(
         bell.time
@@ -319,8 +406,8 @@ async function playBell(bell) {
 
 
     /*
-     * POPUP
-     */
+       Popup
+    */
 
     showBellPopup(
         bell.message
@@ -328,43 +415,59 @@ async function playBell(bell) {
 
 
     /*
-     * RESET AUDIO
-     */
+       Play
+    */
 
-    try {
-
-        audio.pause();
-
-        audio.currentTime = 0;
-
-    }
-
-    catch (error) {
-
-        console.warn(
-            "Gagal reset audio:",
-            error
-        );
-
-    }
-
-
-    /*
-     * MAIN PLAY
-     */
-
-    await playAudioWithRetry(
+    await playAudio(
         audio,
         bell
     );
+
 }
 
 
 /* =========================================================
-   PLAY + RETRY
+   STOP SEMUA AUDIO
 ========================================================= */
 
-async function playAudioWithRetry(
+function stopAllAudio() {
+
+    Object.values(
+        audioElements
+    ).forEach(
+        audio => {
+
+            try {
+
+                audio.pause();
+
+                audio.currentTime =
+                    0;
+
+            }
+
+            catch (error) {
+
+                console.warn(
+                    error
+                );
+
+            }
+
+        }
+    );
+
+
+    currentPlayingAudio =
+        null;
+}
+
+
+/* =========================================================
+   PLAY AUDIO
+========================================================= */
+
+async function playAudio(
     audio,
     bell
 ) {
@@ -378,39 +481,32 @@ async function playAudioWithRetry(
         try {
 
             console.log(
-                `🔊 Memainkan ${bell.name} - percobaan ${attempt}`
+                `🔊 ${bell.name} - percobaan ${attempt}`
             );
 
 
-            /*
-             * Pastikan audio berada
-             * pada posisi awal
-             */
+            audio.currentTime =
+                0;
 
-            if (
-                audio.currentTime > 0
-            ) {
 
-                audio.currentTime = 0;
-
-            }
+            currentPlayingAudio =
+                audio;
 
 
             await audio.play();
 
 
             console.log(
-                `✅ BEL BERHASIL: ${bell.name}`
+                `✅ Audio berhasil: ${bell.name}`
             );
 
 
-            updateAudioStatus(
-                true
-            );
+            if (systemActive) {
 
+                statusElement.textContent =
+                    "🟢 Sistem Bel Aktif • Audio OK";
 
-            currentPlayingBell =
-                null;
+            }
 
 
             return true;
@@ -420,41 +516,23 @@ async function playAudioWithRetry(
         catch (error) {
 
             console.warn(
-                `❌ Percobaan ${attempt} gagal:`,
+                `⚠️ Audio gagal percobaan ${attempt}`,
                 error
             );
 
 
-            if (
-                attempt <
-                MAX_RETRY
-            ) {
-
-                await wait(1000);
-
-            }
+            await wait(
+                1000
+            );
 
         }
 
     }
 
 
-    /*
-     * Semua percobaan gagal
-     */
-
-    console.error(
-        `🔴 Audio gagal setelah ${MAX_RETRY} percobaan.`
-    );
-
-
     showAudioError(
         `Audio "${bell.name}" gagal dimainkan.`
     );
-
-
-    currentPlayingBell =
-        null;
 
 
     return false;
@@ -474,131 +552,96 @@ function wait(ms) {
                 ms
             )
     );
+
 }
 
 
 /* =========================================================
-   UNLOCK AUDIO
+   🔓 UNLOCK AUDIO
+=========================================================
+
+   SANGAT PENTING:
+
+   TIDAK memainkan MP3 bel.
+
+   Hanya silentAudio.
 ========================================================= */
 
 async function unlockAudio() {
 
     console.log(
-        "🔓 Mencoba membuka izin audio..."
+        "🔓 Membuka izin audio..."
     );
 
 
-    const audioList =
-        Object.values(
-            audioElements
-        );
-
-
-    if (
-        audioList.length === 0
-    ) {
+    if (!silentAudio) {
 
         console.error(
-            "❌ Tidak ada audio ditemukan."
+            "❌ silentAudio tidak ditemukan."
         );
 
         return false;
     }
 
 
-    /*
-     * Kita mencoba satu per satu.
-     *
-     * Tidak menggunakan autoplay.
-     */
+    try {
 
-    let unlockedCount = 0;
+        silentAudio.volume =
+            0;
 
 
-    for (
-        const audio of audioList
-    ) {
-
-        try {
-
-            /*
-             * Muat audio
-             */
-
-            audio.load();
+        silentAudio.currentTime =
+            0;
 
 
-            /*
-             * Coba play
-             */
-
-            await audio.play();
+        await silentAudio.play();
 
 
-            /*
-             * Jika berhasil,
-             * pause kembali.
-             */
-
-            audio.pause();
-
-            audio.currentTime = 0;
+        silentAudio.pause();
 
 
-            unlockedCount++;
+        silentAudio.currentTime =
+            0;
 
 
-            console.log(
-                "✅ Audio berhasil di-unlock:",
-                audio.id
-            );
+        silentAudio.volume =
+            1;
 
-        }
-
-        catch (error) {
-
-            console.warn(
-                "⚠️ Audio belum bisa di-unlock:",
-                audio.id,
-                error
-            );
-
-        }
-
-    }
-
-
-    /*
-     * Jika minimal satu audio berhasil
-     */
-
-    if (
-        unlockedCount > 0
-    ) {
 
         audioUnlocked =
             true;
 
 
         console.log(
-            `🔓 Audio aktif ${unlockedCount}/${audioList.length}`
+            "✅ Audio berhasil di-unlock."
         );
 
 
         return true;
+
     }
 
+    catch (error) {
 
-    audioUnlocked =
-        false;
+        console.error(
+            "❌ Browser menolak audio:",
+            error
+        );
 
 
-    return false;
+        audioUnlocked =
+            false;
+
+
+        return false;
+
+    }
+
 }
 
 
 /* =========================================================
-   TOMBOL AKTIF / NONAKTIF
+   AKTIFKAN / MATIKAN
 ========================================================= */
 
 if (activateButton) {
@@ -608,14 +651,17 @@ if (activateButton) {
         async () => {
 
 
-            /* =========================================
+            /*
                MATIKAN
-            ========================================= */
+            */
 
             if (systemActive) {
 
                 systemActive =
                     false;
+
+
+                stopAllAudio();
 
 
                 activateButton.classList.remove(
@@ -635,34 +681,32 @@ if (activateButton) {
                     `;
 
 
-                if (statusElement) {
-
-                    statusElement.textContent =
-                        "🔴 Sistem Bel Belum Aktif";
-
-                }
+                statusElement.textContent =
+                    "🔴 Sistem Bel Belum Aktif";
 
 
-                if (statusLight) {
+                statusLight.classList.remove(
+                    "on"
+                );
 
-                    statusLight.classList.remove(
-                        "on"
-                    );
 
-                    statusLight.classList.add(
-                        "off"
-                    );
+                statusLight.classList.add(
+                    "off"
+                );
 
-                }
+
+                console.log(
+                    "🔴 Sistem dimatikan."
+                );
 
 
                 return;
             }
 
 
-            /* =========================================
-               UNLOCK AUDIO
-            ========================================= */
+            /*
+               AKTIFKAN
+            */
 
             activateButton.disabled =
                 true;
@@ -670,63 +714,49 @@ if (activateButton) {
 
             activateButton.innerHTML =
                 `
-                🔊 MENGAKTIFKAN AUDIO...
+                🔓 MEMBUKA AUDIO...
                 `;
 
+
+            /*
+               Unlock silent audio
+            */
 
             const unlocked =
                 await unlockAudio();
 
 
-            activateButton.disabled =
-                false;
-
-
             if (!unlocked) {
+
+                activateButton.disabled =
+                    false;
+
 
                 activateButton.innerHTML =
                     `
-                    <span class="button-icon">
-                        🔔
-                    </span>
-
-                    <span>
-                        COBA AKTIFKAN LAGI
-                    </span>
+                    🔔 COBA AKTIFKAN LAGI
                     `;
 
 
-                if (statusElement) {
-
-                    statusElement.textContent =
-                        "🔴 Audio belum tersedia";
-
-                }
-
-
-                if (statusLight) {
-
-                    statusLight.classList.remove(
-                        "on"
-                    );
-
-                    statusLight.classList.add(
-                        "off"
-                    );
-
-                }
+                statusElement.textContent =
+                    "🔴 Audio belum tersedia";
 
 
                 return;
+
             }
 
 
-            /* =========================================
+            /*
                AKTIF
-            ========================================= */
+            */
 
             systemActive =
                 true;
+
+
+            activateButton.disabled =
+                false;
 
 
             activateButton.classList.add(
@@ -746,19 +776,134 @@ if (activateButton) {
                 `;
 
 
-            if (statusElement) {
+            statusElement.textContent =
+                "🟢 Sistem Bel Aktif • Audio OK";
 
-                statusElement.textContent =
-                    "🟢 Sistem Bel Aktif • Audio OK";
+
+            statusLight.classList.remove(
+                "off"
+            );
+
+
+            statusLight.classList.add(
+                "on"
+            );
+
+
+            console.log(
+                "🟢 SISTEM BEL AKTIF"
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   🧪 MODE UJI COBA REAL-TIME
+========================================================= */
+
+if (testModeButton) {
+
+    testModeButton.addEventListener(
+        "click",
+        async () => {
+
+
+            /*
+               Kalau mode test sedang aktif,
+               matikan kembali.
+            */
+
+            if (testMode) {
+
+                testMode =
+                    false;
+
+
+                bellSchedule =
+                    [...normalSchedule];
+
+
+                testModeButton.textContent =
+                    "🧪 AKTIFKAN MODE UJI COBA";
+
+
+                testStatus.textContent =
+                    "Mode uji coba tidak aktif";
+
+
+                updateScheduleDisplay();
+
+
+                updateNextBell(
+                    getWitaDate()
+                );
+
+
+                return;
+            }
+
+
+            /*
+               Audio harus diaktifkan dulu.
+            */
+
+            if (!audioUnlocked) {
+
+                const unlocked =
+                    await unlockAudio();
+
+
+                if (!unlocked) {
+
+                    alert(
+                        "Audio belum dapat diaktifkan. Tekan AKTIFKAN SISTEM BEL terlebih dahulu."
+                    );
+
+
+                    return;
+                }
 
             }
 
 
-            if (statusLight) {
+            /*
+               Aktifkan sistem otomatis.
+            */
+
+            if (!systemActive) {
+
+                systemActive =
+                    true;
+
+
+                activateButton.classList.add(
+                    "active"
+                );
+
+
+                activateButton.innerHTML =
+                    `
+                    <span class="button-icon">
+                        🔕
+                    </span>
+
+                    <span>
+                        MATIKAN SISTEM BEL
+                    </span>
+                    `;
+
+
+                statusElement.textContent =
+                    "🟢 Sistem Bel Aktif • MODE UJI COBA";
+
 
                 statusLight.classList.remove(
                     "off"
                 );
+
 
                 statusLight.classList.add(
                     "on"
@@ -767,9 +912,245 @@ if (activateButton) {
             }
 
 
-            console.log(
-                "🟢 SISTEM BEL AKTIF"
+            /*
+               AKTIFKAN TEST
+            */
+
+            testMode =
+                true;
+
+
+            createTestSchedule();
+
+
+            testModeButton.textContent =
+                "🛑 MATIKAN MODE UJI COBA";
+
+
+            testStatus.textContent =
+                "🧪 Mode uji coba aktif • Bel akan berbunyi otomatis";
+
+
+            updateScheduleDisplay();
+
+
+            updateNextBell(
+                getWitaDate()
             );
+
+
+            console.log(
+                "🧪 MODE UJI COBA AKTIF"
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   BUAT JADWAL TEST
+========================================================= */
+
+function createTestSchedule() {
+
+    const now =
+        getWitaDate();
+
+
+    const testTimes = [];
+
+
+    /*
+       Buat:
+
+       +10 detik
+       +25 detik
+       +40 detik
+       +55 detik
+       +70 detik
+    */
+
+
+    for (
+        let i = 0;
+        i < 5;
+        i++
+    ) {
+
+        const testDate =
+            new Date(
+                now.getTime() +
+                (
+                    (i + 1) *
+                    15 *
+                    1000
+                )
+            );
+
+
+        const hour =
+            String(
+                testDate.getHours()
+            ).padStart(
+                2,
+                "0"
+            );
+
+
+        const minute =
+            String(
+                testDate.getMinutes()
+            ).padStart(
+                2,
+                "0"
+            );
+
+
+        /*
+           Karena sistem utama
+           memeriksa menit,
+           test menggunakan menit
+           yang berbeda.
+
+           Jika beberapa masuk menit
+           sama, kita pindahkan.
+        */
+
+        testTimes.push(
+            `${hour}:${minute}`
+        );
+
+    }
+
+
+    /*
+       Untuk pengujian yang benar-benar
+       menggunakan REAL TIME per menit,
+       kita gunakan 1 menit ke depan.
+    */
+
+    const base =
+        new Date(
+            now.getTime() +
+            60 * 1000
+        );
+
+
+    bellSchedule =
+        normalSchedule.map(
+            (bell, index) => {
+
+                const date =
+                    new Date(
+                        base.getTime() +
+                        (
+                            index *
+                            60 *
+                            1000
+                        )
+                    );
+
+
+                const hour =
+                    String(
+                        date.getHours()
+                    ).padStart(
+                        2,
+                        "0"
+                    );
+
+
+                const minute =
+                    String(
+                        date.getMinutes()
+                    ).padStart(
+                        2,
+                        "0"
+                    );
+
+
+                return {
+
+                    ...bell,
+
+                    time:
+                        `${hour}:${minute}`,
+
+                    name:
+                        `TEST • ${bell.name}`,
+
+                    message:
+                        `🧪 TEST: ${bell.message}`
+
+                };
+
+            }
+        );
+
+
+    console.table(
+        bellSchedule
+    );
+
+}
+
+
+/* =========================================================
+   UPDATE TAMPILAN JADWAL
+========================================================= */
+
+function updateScheduleDisplay() {
+
+    const items =
+        document.querySelectorAll(
+            ".schedule-item"
+        );
+
+
+    items.forEach(
+        (item, index) => {
+
+            const bell =
+                bellSchedule[index];
+
+
+            if (!bell) {
+                return;
+            }
+
+
+            const time =
+                item.querySelector(
+                    ".schedule-time"
+                );
+
+
+            const name =
+                item.querySelector(
+                    ".schedule-info strong"
+                );
+
+
+            if (time) {
+
+                time.textContent =
+                    bell.time;
+
+            }
+
+
+            if (name) {
+
+                name.textContent =
+                    bell.name;
+
+            }
+
+
+            item.dataset.time =
+                bell.time;
 
         }
     );
@@ -784,11 +1165,11 @@ if (activateButton) {
 function checkAudioFiles() {
 
     console.log(
-        "🎵 Memeriksa file MP3..."
+        "🎵 Mengecek MP3..."
     );
 
 
-    bellSchedule.forEach(
+    normalSchedule.forEach(
         bell => {
 
             const audio =
@@ -800,65 +1181,34 @@ function checkAudioFiles() {
             if (!audio) {
 
                 console.error(
-                    `❌ Element audio tidak ditemukan: ${bell.audioId}`
+                    `❌ Audio tidak ditemukan: ${bell.audioId}`
                 );
 
                 return;
             }
 
-
-            const source =
-                audio.querySelector(
-                    "source"
-                );
-
-
-            if (!source) {
-
-                console.error(
-                    `❌ Source tidak ditemukan: ${bell.audioId}`
-                );
-
-                return;
-            }
-
-
-            const file =
-                source.src;
-
-
-            /*
-             * BERHASIL LOAD
-             */
 
             audio.addEventListener(
                 "canplay",
                 () => {
 
                     console.log(
-                        `✅ MP3 tersedia: ${file}`
+                        `✅ MP3 siap: ${bell.audioId}`
                     );
 
                     audio.dataset.loaded =
                         "true";
 
-                },
-                {
-                    once: true
                 }
             );
 
-
-            /*
-             * ERROR LOAD
-             */
 
             audio.addEventListener(
                 "error",
                 () => {
 
                     console.error(
-                        `❌ MP3 gagal dimuat: ${file}`
+                        `❌ MP3 gagal: ${bell.audioId}`
                     );
 
                     audio.dataset.loaded =
@@ -868,53 +1218,16 @@ function checkAudioFiles() {
             );
 
 
-            /*
-             * MULAI LOAD
-             */
-
             audio.load();
 
         }
     );
+
 }
 
 
 /* =========================================================
-   STATUS AUDIO
-========================================================= */
-
-function updateAudioStatus(
-    success
-) {
-
-    if (!statusElement) {
-        return;
-    }
-
-
-    if (
-        success &&
-        systemActive
-    ) {
-
-        statusElement.textContent =
-            "🟢 Sistem Bel Aktif • Audio OK";
-
-        return;
-    }
-
-
-    if (!success) {
-
-        statusElement.textContent =
-            "🟠 Sistem aktif • Audio bermasalah";
-
-    }
-}
-
-
-/* =========================================================
-   ERROR AUDIO
+   STATUS ERROR
 ========================================================= */
 
 function showAudioError(
@@ -922,7 +1235,7 @@ function showAudioError(
 ) {
 
     console.error(
-        "🔴 AUDIO ERROR:",
+        "🔴",
         message
     );
 
@@ -941,11 +1254,13 @@ function showAudioError(
             "on"
         );
 
+
         statusLight.classList.add(
             "off"
         );
 
     }
+
 }
 
 
@@ -967,7 +1282,7 @@ function updateNextBell(
         now.getMinutes();
 
 
-    let nextBell =
+    let next =
         null;
 
 
@@ -994,39 +1309,38 @@ function updateNextBell(
             currentMinutes
         ) {
 
-            nextBell =
+            next =
                 bell;
 
             break;
+
         }
 
     }
 
 
-    /*
-     * Semua jadwal sudah lewat
-     */
+    if (!next) {
 
-    if (!nextBell) {
-
-        nextBell =
+        next =
             bellSchedule[0];
 
 
         nextBellElement.textContent =
-            `${nextBell.time} • ${nextBell.name} (Besok)`;
+            `${next.time} • ${next.name} (Besok)`;
 
         return;
+
     }
 
 
     nextBellElement.textContent =
-        `${nextBell.time} • ${nextBell.name}`;
+        `${next.time} • ${next.name}`;
+
 }
 
 
 /* =========================================================
-   ANIMASI JADWAL
+   HIGHLIGHT
 ========================================================= */
 
 function highlightSchedule(
@@ -1050,46 +1364,39 @@ function highlightSchedule(
     );
 
 
-    const activeItem =
+    const active =
         document.querySelector(
             `.schedule-item[data-time="${time}"]`
         );
 
 
-    if (!activeItem) {
+    if (!active) {
         return;
     }
 
 
-    activeItem.classList.add(
+    active.classList.add(
         "active"
     );
 
 
-    /*
-     * Scroll ke jadwal
-     */
-
-    activeItem.scrollIntoView({
+    active.scrollIntoView({
         behavior: "smooth",
         block: "center"
     });
 
 
-    /*
-     * Hapus animasi
-     */
-
     setTimeout(
         () => {
 
-            activeItem.classList.remove(
+            active.classList.remove(
                 "active"
             );
 
         },
         8000
     );
+
 }
 
 
@@ -1106,12 +1413,8 @@ function showBellPopup(
     }
 
 
-    if (bellMessage) {
-
-        bellMessage.textContent =
-            message;
-
-    }
+    bellMessage.textContent =
+        message;
 
 
     bellPopup.classList.add(
@@ -1129,6 +1432,7 @@ function showBellPopup(
         },
         5000
     );
+
 }
 
 
@@ -1160,10 +1464,6 @@ let deferredPrompt =
     null;
 
 
-/* =========================================================
-   ANDROID INSTALL PROMPT
-========================================================= */
-
 window.addEventListener(
     "beforeinstallprompt",
     event => {
@@ -1173,11 +1473,6 @@ window.addEventListener(
 
         deferredPrompt =
             event;
-
-
-        console.log(
-            "📲 PWA siap di-install."
-        );
 
 
         if (fixedInstallButton) {
@@ -1192,14 +1487,10 @@ window.addEventListener(
 
 
 /* =========================================================
-   INSTALL APP
+   INSTALL
 ========================================================= */
 
 async function installApp() {
-
-    /*
-     * Chrome Android
-     */
 
     if (deferredPrompt) {
 
@@ -1221,27 +1512,18 @@ async function installApp() {
 
 
         return;
+
     }
 
 
-    /*
-     * Safari iPhone
-     */
-
     alert(
         "📱 Cara memasang Bel Sekolah:\n\n" +
-        "iPhone/iPad:\n" +
-        "1. Tekan tombol Bagikan ⬆️\n" +
-        "2. Pilih 'Tambahkan ke Layar Utama'\n\n" +
-        "Android:\n" +
-        "Buka menu browser ⋮ lalu pilih 'Tambahkan ke layar utama' atau 'Install aplikasi'."
+        "Android: buka menu browser ⋮ → Install aplikasi / Tambahkan ke layar utama.\n\n" +
+        "iPhone: tekan Bagikan ⬆️ → Tambahkan ke Layar Utama."
     );
+
 }
 
-
-/* =========================================================
-   INSTALL BUTTON
-========================================================= */
 
 if (installButton) {
 
@@ -1263,23 +1545,15 @@ if (fixedInstallButton) {
 }
 
 
-/* =========================================================
-   TOMBOL NANTI
-========================================================= */
-
 if (laterButton) {
 
     laterButton.addEventListener(
         "click",
         () => {
 
-            if (installPopup) {
-
-                installPopup.classList.remove(
-                    "show"
-                );
-
-            }
+            installPopup.classList.remove(
+                "show"
+            );
 
         }
     );
@@ -1294,11 +1568,6 @@ if (laterButton) {
 window.addEventListener(
     "appinstalled",
     () => {
-
-        console.log(
-            "✅ Bel Sekolah berhasil di-install."
-        );
-
 
         deferredPrompt =
             null;
@@ -1337,12 +1606,14 @@ if (
         () => {
 
             navigator.serviceWorker
-                .register("./sw.js")
+                .register(
+                    "./sw.js"
+                )
                 .then(
                     registration => {
 
                         console.log(
-                            "✅ Service Worker aktif:",
+                            "✅ SW aktif:",
                             registration.scope
                         );
 
@@ -1352,7 +1623,7 @@ if (
                     error => {
 
                         console.error(
-                            "❌ Service Worker gagal:",
+                            "❌ SW gagal:",
                             error
                         );
 
@@ -1366,7 +1637,7 @@ if (
 
 
 /* =========================================================
-   INIT
+   START
 ========================================================= */
 
 document.addEventListener(
@@ -1390,71 +1661,12 @@ document.addEventListener(
         );
 
 
-        /*
-         * Tombol install awalnya disembunyikan.
-         */
-
         if (fixedInstallButton) {
 
             fixedInstallButton.style.display =
                 "none";
 
-        }   
+        }
 
     }
-
-    
-    
 );
-/* =========================================================
-   🧪 TEST BEL
-========================================================= */
-
-if (testBellButton) {
-
-    testBellButton.addEventListener(
-        "click",
-        async () => {
-
-            console.log("🧪 TEST BEL DIMULAI");
-
-
-            /*
-             * Pastikan audio sudah di-unlock
-             */
-
-            if (!audioUnlocked) {
-
-                const unlocked =
-                    await unlockAudio();
-
-                if (!unlocked) {
-
-                    alert(
-                        "❌ Audio belum tersedia.\n\n" +
-                        "Pastikan file MP3 ada dan coba lagi."
-                    );
-
-                    return;
-                }
-            }
-
-
-            /*
-             * Ambil bel pertama
-             */
-
-            const testBell =
-                bellSchedule[0];
-
-
-            /*
-             * Mainkan
-             */
-
-            await playBell(testBell);
-
-        }
-    );
-
-};

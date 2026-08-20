@@ -1,6 +1,7 @@
-const CACHE_NAME = "bel-sekolah-v4";
+const CACHE_NAME = "bel-sekolah-v5";
 
 const FILES_TO_CACHE = [
+
     "./",
     "./index.html",
     "./style.css",
@@ -13,85 +14,101 @@ const FILES_TO_CACHE = [
     "./istrahat.mp3",
     "./masuk-setelah-istrahat.mp3",
     "./pulang-sekolah.mp3"
+
 ];
 
-self.addEventListener("install", event => {
 
-    event.waitUntil(
+self.addEventListener(
+    "install",
+    event => {
 
-        caches.open(CACHE_NAME)
-            .then(cache => {
+        event.waitUntil(
 
-                console.log(
-                    "📦 Menyimpan aplikasi dan audio..."
-                );
+            caches.open(
+                CACHE_NAME
+            )
+            .then(
+                cache => {
 
-                return cache.addAll(
-                    FILES_TO_CACHE
-                );
+                    return cache.addAll(
+                        FILES_TO_CACHE
+                    );
 
-            })
-            .catch(error => {
+                }
+            )
 
-                console.error(
-                    "❌ Cache gagal:",
-                    error
-                );
+        );
 
-            })
-    );
+        self.skipWaiting();
 
-    self.skipWaiting();
-});
+    }
+);
 
 
-self.addEventListener("activate", event => {
+self.addEventListener(
+    "activate",
+    event => {
 
-    event.waitUntil(
+        event.waitUntil(
 
-        caches.keys()
-            .then(cacheNames => {
+            caches.keys()
+            .then(
+                names => {
 
-                return Promise.all(
+                    return Promise.all(
 
-                    cacheNames
+                        names
                         .filter(
                             name =>
-                                name !== CACHE_NAME
+                                name !==
+                                CACHE_NAME
                         )
                         .map(
                             name =>
-                                caches.delete(name)
+                                caches.delete(
+                                    name
+                                )
                         )
-                );
 
-            })
-    );
+                    );
 
-    self.clients.claim();
-});
-
-
-self.addEventListener("fetch", event => {
-
-    event.respondWith(
-
-        caches.match(event.request)
-            .then(cached => {
-
-                if (cached) {
-                    return cached;
                 }
+            )
 
-                return fetch(event.request);
+        );
 
-            })
-            .catch(() => {
+        self.clients.claim();
 
-                return caches.match(
-                    "./index.html"
-                );
+    }
+);
 
-            })
-    );
-});
+
+self.addEventListener(
+    "fetch",
+    event => {
+
+        event.respondWith(
+
+            caches.match(
+                event.request
+            )
+            .then(
+                cached => {
+
+                    if (cached) {
+
+                        return cached;
+
+                    }
+
+                    return fetch(
+                        event.request
+                    );
+
+                }
+            )
+
+        );
+
+    }
+);
